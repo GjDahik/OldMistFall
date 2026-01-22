@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Old Mistfall - Comercios</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text:ital@0;1&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Crimson Text', serif;
+      min-height: 100vh;
+      color: #e8e0d5;
+      background: #0a0908;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(139,90,43,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(70,50,30,0.2) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .fog {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, 
+        rgba(100,100,120,0.1) 0%, 
+        transparent 30%,
+        transparent 70%,
+        rgba(50,50,60,0.2) 100%);
+      pointer-events: none;
+      z-index: 1;
+      animation: fog-drift 20s ease-in-out infinite;
+    }
+    
+    @keyframes fog-drift {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      position: relative;
+    }
+    
+    .city-emblem {
+      font-size: 4em;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 20px rgba(200,170,130,0.5));
+    }
+    
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 3.5em;
+      color: #c9a868;
+      text-shadow: 
+        0 0 10px rgba(201,168,104,0.5),
+        0 4px 8px rgba(0,0,0,0.8),
+        2px 2px 0 #2a1f0f;
+      letter-spacing: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .subtitle {
+      font-family: 'Cinzel', serif;
+      color: #8a7a6a;
+      font-size: 1.2em;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px 0;
+      gap: 20px;
+    }
+    
+    .divider-line {
+      height: 2px;
+      width: 100px;
+      background: linear-gradient(90deg, transparent, #5a4a3a, transparent);
+    }
+    
+    .divider-icon {
+      color: #c9a868;
+      font-size: 1.5em;
+    }
+    
+    /* Botón principal - Taberna */
+    .main-tavern {
+      margin-bottom: 40px;
+    }
+    
+    .tavern-btn {
+      display: block;
+      position: relative;
+      padding: 40px;
+      background: 
+        linear-gradient(135deg, rgba(30,25,20,0.95), rgba(20,15,10,0.98));
+      border: 4px solid #5a4a3a;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.4s;
+      overflow: hidden;
+    }
+    
+    .tavern-btn::before {
+      content: "";
+      position: absolute;
+      top: 5px; left: 5px; right: 5px; bottom: 5px;
+      border: 1px solid #3a2a1a;
+      border-radius: 3px;
+      pointer-events: none;
+    }
+    
+    .tavern-btn::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201,168,104,0.1), transparent);
+      transition: left 0.6s;
+    }
+    
+    .tavern-btn:hover::after {
+      left: 100%;
+    }
+    
+    .tavern-btn:hover {
+      border-color: #c9a868;
+      box-shadow: 
+        0 0 40px rgba(201,168,104,0.3),
+        inset 0 0 60px rgba(201,168,104,0.05);
+      transform: scale(1.01);
+    }
+    
+    .tavern-content {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .tavern-icon {
+      font-size: 5em;
+      filter: drop-shadow(0 0 15px rgba(200,170,130,0.6));
+    }
+    
+    .tavern-info { flex: 1; }
+    
+    .tavern-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9a868, #a08040);
+      color: #1a1510;
+      padding: 5px 15px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75em;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    
+    .tavern-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2em;
+      color: #e8d5b5;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+      margin-bottom: 10px;
+    }
+    
+    .tavern-desc {
+      color: #a09080;
+      font-size: 1.15em;
+      font-style: italic;
+    }
+    
+    .enter-text {
+      font-family: 'Cinzel', serif;
+      color: #c9a868;
+      font-size: 1em;
+      letter-spacing: 3px;
+      text-align: right;
+      margin-top: 15px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    
+    .tavern-btn:hover .enter-text {
+      opacity: 1;
+    }
+    
+    /* Sección de tiendas */
+    .section-title {
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      color: #8a7a6a;
+      font-size: 1.3em;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    
+    .shops-scroll {
+      position: relative;
+      padding: 20px 0;
+    }
+    
+    .shops-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    
+    @media (max-width: 600px) {
+      .shops-grid { grid-template-columns: 1fr; }
+    }
+    
+    .shop-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 25px;
+      background: linear-gradient(135deg, rgba(25,20,15,0.9), rgba(15,12,8,0.95));
+      border: 2px solid #3a2a1a;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .shop-card::before {
+      content: "";
+      position: absolute;
+      top: 3px; left: 3px; right: 3px; bottom: 3px;
+      border: 1px solid rgba(90,70,50,0.3);
+      pointer-events: none;
+    }
+    
+    .shop-card:hover {
+      border-color: var(--shop-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px var(--shop-glow);
+    }
+    
+    .shop-icon {
+      font-size: 2.5em;
+      width: 60px;
+      text-align: center;
+    }
+    
+    .shop-info { flex: 1; }
+    
+    .shop-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2em;
+      color: var(--shop-color);
+      margin-bottom: 5px;
+    }
+    
+    .shop-desc {
+      color: #7a6a5a;
+      font-size: 0.95em;
+      font-style: italic;
+    }
+    
+    .shop-status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #8b0000;
+      color: #e8d5b5;
+      padding: 3px 10px;
+      font-size: 0.7em;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+    }
+    
+    /* Colores de tiendas */
+    .jimjam { --shop-color: #9b7bb8; --shop-glow: rgba(155,123,184,0.3); }
+    .grimm { --shop-color: #c87941; --shop-glow: rgba(200,121,65,0.3); }
+    .klicklac { --shop-color: #7a9b5a; --shop-glow: rgba(122,155,90,0.3); }
+    .brugo { --shop-color: #6a7a8a; --shop-glow: rgba(106,122,138,0.3); }
+    
+    /* Footer */
+    footer {
+      margin-top: 60px;
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid #2a2015;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .metal-plate {
+      position: relative;
+      background: linear-gradient(180deg, 
+        #4a4a4a 0%, 
+        #3a3a3a 10%, 
+        #2a2a2a 50%, 
+        #3a3a3a 90%, 
+        #4a4a4a 100%);
+      border: 3px solid #5a5a5a;
+      border-radius: 8px;
+      padding: 20px 40px;
+      box-shadow: 
+        0 4px 15px rgba(0,0,0,0.6),
+        inset 0 2px 4px rgba(255,255,255,0.1),
+        inset 0 -2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .metal-plate::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      border: 1px solid #4a4a4a;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    
+    .screw {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle at 30% 30%, #6a6a6a, #3a3a3a);
+      border-radius: 50%;
+      border: 1px solid #5a5a5a;
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    .screw::after {
+      content: "+";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #2a2a2a;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    
+    .screw-tl { top: 10px; left: 10px; }
+    .screw-tr { top: 10px; right: 10px; }
+    .screw-bl { bottom: 10px; left: 10px; }
+    .screw-br { bottom: 10px; right: 10px; }
+    
+    .powered {
+      font-family: 'Cinzel', serif;
+      color: #8a8a8a;
+      font-size: 0.85em;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+    
+    .dm-name {
+      color: #c9a868;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(201,168,104,0.5);
+    }
+    
+    .dm-title {
+      color: #6a6a6a;
+      font-size: 0.8em;
+      margin-top: 8px;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+    
+    .footer-emblem {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="fog"></div>
+  
+  <div class="container">
+    <header>
+      <div class="city-emblem">🏰</div>
+      <h1>OLD MISTFALL</h1>
+      <p class="subtitle">Directorio de Comercios</p>
+    </header>
+    
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">⚜️</span>
+      <div class="divider-line"></div>
+    </div>
+    
+    <!-- Taberna Principal -->
+    <div class="main-tavern">
+      <a href="https://gjdahik.github.io/buhosabio/" class="tavern-btn" target="_blank">
+        <div class="tavern-content">
+          <span class="tavern-icon">🦉</span>
+          <div class="tavern-info">
+            <span class="tavern-badge">★ Establecimiento Destacado ★</span>
+            <h2 class="tavern-title">La Taberna del Búho Sabio</h2>
+            <p class="tavern-desc">"Donde los aventureros encuentran descanso, historias y los mejores hidromeles del reino"</p>
+            <p class="enter-text">— Entrar al establecimiento →</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span class="divider-icon">◆</span>
+      <div class="divider-line"></div>
+    </div>
+    
+    <h3 class="section-title">Comercios y Artesanos</h3>
+    
+    <!-- Grid de tiendas -->
+    <div class="shops-scroll">
+      <div class="shops-grid">
+        <a href="https://gjdahik.github.io/jimjamstore/" class="shop-card jimjam" target="_blank">
+          <span class="shop-icon">🧪</span>
+          <div class="shop-info">
+            <h3 class="shop-name">Pociones de JimJam</h3>
+            <p class="shop-desc">Elixires, brebajes y remedios arcanos</p>
+          </div>
+        </a>
+        
+        <a href="https://gjdahik.github.io/Grimmsforge/" class="shop-card grimm" target="_blank">
+          <span class="shop-icon">⚔️</span>
+          <div class="shop-info">
+            <h3 class="shop-name">La Forja de Grimm</h3>
+            <p class="shop-desc">Armero legendario y maestro herrero</p>
+          </div>
+        </a>
+        
+        <a href="https://gjdahik.github.io/artesaniasklicklac/" class="shop-card klicklac" target="_blank">
+          <span class="shop-icon">🏹</span>
+          <div class="shop-info">
+            <h3 class="shop-name">Artesanías Klicklac</h3>
+            <p class="shop-desc">Arquería fina y creaciones de artífice</p>
+          </div>
+        </a>
+        
+        <a href="https://gjdahik.github.io/tiendadebrugo/" class="shop-card brugo" target="_blank">
+          <span class="shop-icon">📚</span>
+          <div class="shop-info">
+            <h3 class="shop-name">Emporio de Brugo</h3>
+            <p class="shop-desc">Comerciante erudito y coleccionista</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="metal-plate">
+      <div class="screw screw-tl"></div>
+      <div class="screw screw-tr"></div>
+      <div class="screw screw-bl"></div>
+      <div class="screw screw-br"></div>
+      <p class="powered">Powered by <span class="dm-name">GjDahik</span></p>
+      <p class="dm-title">✦ Su DM de confianza ✦</p>
+    </div>
+  </footer>
+</body>
+</html>
