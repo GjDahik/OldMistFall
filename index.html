@@ -386,7 +386,36 @@
     .brugo { --shop-color: #6a7a8a; --shop-glow: rgba(106,122,138,0.3); }
     .heroes { --shop-color: #d4af37; --shop-glow: rgba(212,175,55,0.3); }
     .zendaya { --shop-color: #5b8abd; --shop-glow: rgba(91,138,189,0.3); }
-    .battle { --shop-color: #c94c4c; --shop-glow: rgba(201,76,76,0.3); }
+    .battle { 
+      --shop-color: #c94c4c; 
+      --shop-glow: rgba(192,192,192,0.4);
+      background: linear-gradient(135deg, rgba(80,80,90,0.95), rgba(50,50,58,0.98));
+      border-color: #707080;
+      justify-content: center;
+    }
+    
+    .battle .shop-info {
+      flex: none;
+      text-align: center;
+    }
+    
+    .battle .shop-desc {
+      color: #a8b4c0;
+    }
+    
+    .battle:hover {
+      border-color: #a8b4c0;
+    }
+    
+    .full-width {
+      grid-column: span 2;
+    }
+    
+    @media (max-width: 600px) {
+      .full-width {
+        grid-column: span 1;
+      }
+    }
     
     /* Footer */
     footer {
@@ -557,14 +586,6 @@
           </div>
         </a>
         
-        <a href="https://gjdahik.github.io/heroes2/" class="shop-card heroes" target="_blank">
-          <span class="shop-icon">👤</span>
-          <div class="shop-info">
-            <h3 class="shop-name">Nuestros Héroes</h3>
-            <p class="shop-desc">Los valientes aventureros de Old Mistfall</p>
-          </div>
-        </a>
-        
         <a href="https://gjdahik.github.io/Zendayaslibrary/" class="shop-card zendaya" target="_blank">
           <span class="shop-icon">📖</span>
           <div class="shop-info">
@@ -573,12 +594,20 @@
           </div>
         </a>
         
-        <a href="https://gjdahik.github.io/battlehelper/" class="shop-card battle" target="_blank">
-          <span class="shop-icon">⚔️</span>
+        <a href="https://gjdahik.github.io/heroes2/" class="shop-card heroes" target="_blank">
+          <span class="shop-icon">👤</span>
+          <div class="shop-info">
+            <h3 class="shop-name">Nuestros Héroes</h3>
+            <p class="shop-desc">Los valientes aventureros de Old Mistfall</p>
+          </div>
+        </a>
+        
+        <a href="https://gjdahik.github.io/battlehelper/" class="shop-card battle full-width" target="_blank">
           <div class="shop-info">
             <h3 class="shop-name">Battle Tracker</h3>
             <p class="shop-desc">Herramienta de combate y seguimiento de turnos</p>
           </div>
+          <span class="shop-icon">🥊</span>
         </a>
       </div>
     </div>
