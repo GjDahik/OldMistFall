@@ -384,7 +384,24 @@
     .grimm { --shop-color: #c87941; --shop-glow: rgba(200,121,65,0.3); }
     .klicklac { --shop-color: #7a9b5a; --shop-glow: rgba(122,155,90,0.3); }
     .brugo { --shop-color: #6a7a8a; --shop-glow: rgba(106,122,138,0.3); }
-    .heroes { --shop-color: #d4af37; --shop-glow: rgba(212,175,55,0.3); }
+    .heroes { 
+      --shop-color: #50c878; 
+      --shop-glow: rgba(80,200,120,0.4);
+      background: linear-gradient(135deg, rgba(15,15,15,0.98), rgba(5,5,5,0.99));
+      border-color: #2a2a2a;
+    }
+    
+    .heroes .shop-desc {
+      color: #3cb371;
+    }
+    
+    .heroes-icon {
+      color: #50c878;
+    }
+    
+    .heroes:hover {
+      border-color: #50c878;
+    }
     .zendaya { --shop-color: #5b8abd; --shop-glow: rgba(91,138,189,0.3); }
     .battle { 
       --shop-color: #c94c4c; 
@@ -595,7 +612,7 @@
         </a>
         
         <a href="https://gjdahik.github.io/heroes2/" class="shop-card heroes" target="_blank">
-          <span class="shop-icon">👤</span>
+          <span class="shop-icon heroes-icon">✦</span>
           <div class="shop-info">
             <h3 class="shop-name">Nuestros Héroes</h3>
             <p class="shop-desc">Los valientes aventureros de Old Mistfall</p>
